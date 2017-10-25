@@ -88,26 +88,38 @@
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@id/city"
-                android:layout_marginStart="15.0dip"
+                android:layout_marginStart="10.0dip"
                 android:layout_marginTop="5dip"
                 android:singleLine="true"
                 android:text="今天18:25发布"
                 android:textColor="@android:color/white"
                 android:textSize="15.0sp" />
+            <!-- 当前温度信息 -->
+            <TextView
+                android:id="@+id/current_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/city"
+                android:layout_marginTop="3dip"
+                android:layout_marginStart="15.0dip"
+                android:singleLine="true"
+                android:text="温度:24℃"
+                android:textSize="17.0sp"
+                android:textColor="@android:color/white"
+                 />
             <!-- 湿度信息 -->
             <TextView
                 android:id="@+id/humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/time"
-                android:layout_marginStart="15.0dip"
-                android:singleLine="true"
                 android:text="湿度:57%"
+                android:textSize="17.0sp"
                 android:textColor="@android:color/white"
-                android:textSize="15.0sp" />
+                android:layout_marginTop="5.0dip"
+                android:layout_marginStart="15.0dip"
+                android:layout_toRightOf="@id/city"
+                android:layout_below="@id/current_temperature"/>
             <!-- PM2.5整体信息块 -->
             <LinearLayout
                 android:id="@+id/pm2_5_content"
@@ -174,9 +186,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/humidity"
+                android:layout_below="@id/time"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5.0dip">
+                android:layout_marginTop="15.0dip">
                 <!-- 天气情况图片示例 -->
                 <ImageView
                     android:id="@+id/weather_img"
@@ -190,6 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="16.0dip"
                     android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@id/weather_img"
                     android:singleLine="true"
@@ -225,9 +238,9 @@
                     android:id="@+id/wind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/climate"
-                    android:layout_marginLeft="5dip"
-                    android:layout_toRightOf="@id/weather_img"
+                    android:layout_below="@id/temperature"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@id/climate"
                     android:singleLine="true"
                     android:text="微风"
                     android:textColor="@android:color/white"
