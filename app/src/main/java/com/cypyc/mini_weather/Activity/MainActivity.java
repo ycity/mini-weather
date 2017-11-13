@@ -1,4 +1,4 @@
-package com.cypyc.mini_weather.Activity;
+package com.cypyc.mini_weather.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,8 +28,6 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static android.R.attr.start;
 
 /**
  * Created by yuncity on 2017/10/26.
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.title_city_manager) {
-                    Intent i = new Intent(this, SelectCityActivity.class);
+                    Intent i = new Intent(MainActivity.this, SelectCityActivity.class);
                     startActivity(i);
                 }
             }

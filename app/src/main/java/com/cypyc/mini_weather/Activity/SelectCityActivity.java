@@ -1,4 +1,4 @@
-package com.cypyc.mini_weather.Activity;
+package com.cypyc.mini_weather.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
