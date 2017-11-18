@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.title_update_btn) {
+                    Log.d("update_btn", "in");
                     SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
                     String cityCode = sharedPreferences.getString("main_city_code", "101010200");
+                    Log.d("cityCode", cityCode);
                     queryWeatherCode(cityCode);
                 }
             }
