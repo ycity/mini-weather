@@ -42,32 +42,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.weather_info);
 
+        setContentView(R.layout.weather_info); // 设置layout
+
+        /* 设置更新按钮 start */
         mUpdateBtn = (ImageView) findViewById(R.id.title_update_btn);
         mUpdateBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.title_update_btn) {
-                    Log.d("update_btn", "in");
-                    SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-                    String cityCode = sharedPreferences.getString("main_city_code", "101010200");
-                    Log.d("cityCode", cityCode);
-                    queryWeatherCode(cityCode);
+                    SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE); // 设置sharedPreferences的文件名为config.xml，操作模式为私有数据
+                    String cityCode = sharedPreferences.getString("main_city_code", "101010200"); // 获取sharedPreferences中的默认城市代码，若找不到该项则默认返回北京市海淀区的代码
+                    queryWeatherCode(cityCode); // 用获取的城市代码查询当地的天气
                 }
             }
         });
+        /* 设置更新按钮 end */
+
+        /* 设置选择城市按钮 start */
         mCitySelect = (ImageView) findViewById(R.id.title_city_manager);
         mCitySelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.title_city_manager) {
-                    Intent i = new Intent(MainActivity.this, SelectCityActivity.class);
-                    startActivity(i);
+                    Intent i = new Intent(MainActivity.this, SelectCityActivity.class); // 创建一个意图
+                    startActivity(i); // 打开选择城市Activity
                 }
             }
         });
+        /* 设置选择城市按钮 end */
 
+        /* 检查网络状态 start */
         if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
             Log.d("myWeather", "网络OK");
             Toast.makeText(MainActivity.this, "网络OK！", Toast.LENGTH_LONG).show();
@@ -75,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
             Log.d("myWeather", "网络挂了");
             Toast.makeText(MainActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
         }
+        /* 检查网络状态 end */
 
-        initView();
+        initView(); // 对界面进行初始化
     }
 
     private Handler mHandler = new Handler() {
@@ -95,15 +101,13 @@ public class MainActivity extends AppCompatActivity {
     private void queryWeatherCode(String cityCode) {
 
         final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey=" + cityCode;
-        Log.d("myWeather", address);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d("where", "run thread");
                 HttpURLConnection con = null;
                 TodayWeather todayWeather = null;
                 try {
-                    Log.d("myWeather", "try to get url");
                     URL url = new URL(address);
                     con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    void initView() {
+    void initView() { // 对界面进行初始化
         city_name_Tv = (TextView) findViewById(R.id.title_city_name);
         cityTv = (TextView) findViewById(R.id.city);
         timeTv = (TextView) findViewById(R.id.time);

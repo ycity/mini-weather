@@ -19,35 +19,34 @@ import java.util.List;
  */
 
 public class MyApplication extends Application {
-    private static final String TAG = "MyAPP";
-    private static MyApplication mApplication;
-    private CityDB mCityDB;
-    private List<City> mCityList;
 
+    private static final String TAG = "MyAPP";
+    private static MyApplication myApp;
+    private CityDB cityDB;
+    private List<City> cityList;
 
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "MyApplication->Oncreate");
-        mApplication = this;
-        mCityDB = openCityDB();
+        myApp = this;
+        cityDB = openCityDB();
         initCityList();
     }
 
     private void initCityList() {
-        mCityList = new ArrayList<City>();
+        cityList = new ArrayList<City>();
         new Thread(new Runnable() {
             @Override
             public void run() {
-// TODO Auto-generated method stub
                 prepareCityList();
             }
         }).start();
     }
 
     private boolean prepareCityList() {
-        mCityList = mCityDB.getAllCity();
+        cityList = cityDB.getAllCity();
         int i = 0;
-        for (City city : mCityList) {
+        for (City city : cityList) {
             i++;
             String cityName = city.getCity();
             String cityCode = city.getNumber();
@@ -58,17 +57,16 @@ public class MyApplication extends Application {
     }
 
     public List<City> getCityList() {
-        return mCityList;
+        return cityList;
     }
 
     public static MyApplication getInstance() {
-        return mApplication;
+        return myApp;
     }
 
     private CityDB openCityDB() {
         String path = "/data"
-                + Environment.getDataDirectory().getAbsolutePath
-                ()
+                + Environment.getDataDirectory().getAbsolutePath()
                 + File.separator + getPackageName()
                 + File.separator + "databases1"
                 + File.separator
