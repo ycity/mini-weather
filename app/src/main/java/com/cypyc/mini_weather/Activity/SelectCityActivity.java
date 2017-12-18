@@ -32,5 +32,4 @@ public class SelectCityActivity extends Activity {
         });
     }
 
-
 }
