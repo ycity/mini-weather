@@ -7,16 +7,16 @@ package com.cypyc.mini_weather.beans;
 public class City {
 
     private String province;
-    private String city;
+    private String name;
     private String number;
     private String firstPY;
     private String allPY;
     private String allFristPY;
 
-    public City(String province, String city, String number, String
+    public City(String province, String name, String number, String
             firstPY, String allPY, String allFristPY) {
         this.province = province;
-        this.city = city;
+        this.name = name;
         this.number = number;
         this.firstPY = firstPY;
         this.allPY = allPY;
@@ -31,12 +31,12 @@ public class City {
         this.province = province;
     }
 
-    public String getCity() {
-        return city;
+    public String getName() {
+        return name;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setName(String city) {
+        this.name = city;
     }
 
     public String getNumber() {

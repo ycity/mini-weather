@@ -20,14 +20,13 @@ import java.util.List;
 
 public class MyApplication extends Application {
 
-    private static final String TAG = "MyAPP";
+    private static final String TAG = "City";
     private static MyApplication myApp;
     private CityDB cityDB;
     private List<City> cityList;
 
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "MyApplication->Oncreate");
         myApp = this;
         cityDB = openCityDB();
         initCityList();
@@ -48,7 +47,7 @@ public class MyApplication extends Application {
         int i = 0;
         for (City city : cityList) {
             i++;
-            String cityName = city.getCity();
+            String cityName = city.getName();
             String cityCode = city.getNumber();
             Log.d(TAG, cityCode + ":" + cityName);
         }

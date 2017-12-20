@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+
 /**
  * Created by yuncity on 2017/10/24.
  */
@@ -26,4 +27,6 @@ public class NetUtil {
         }
         return NETWORN_NONE;
     }
+
+
 }
