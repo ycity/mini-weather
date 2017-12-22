@@ -45,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
         initView(); // 对界面进行初始化
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    String cityCode = data.getStringExtra("cityCode");
+                    Log.d("cityCode", cityCode);
+                    queryWeatherByCityCode(cityCode);
+                }
+                break;
+            default:
+        }
+        Intent intent = getIntent();
+        String cityCode = intent.getStringExtra("cityCode");
+        // Log.d("cityCode", cityCode);
+        // queryWeatherByCityCode(cityCode);
+
+    }
+
 
     /* 创建一个Handler实例并重写其handleMessage函数 START */
     private Handler handler = new Handler() {
@@ -97,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (v.getId() == R.id.title_city_manager) {
                     Intent i = new Intent(MainActivity.this, SelectCityActivity.class); // 创建一个意图
-                    startActivity(i); // 打开选择城市Activity
+                    startActivityForResult(i, 1); // 打开选择城市Activity
                 }
             }
         });

@@ -74,10 +74,11 @@ public class SelectCityActivity extends Activity {
         citylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Toast.makeText(SelectCityActivity.this, "你单击了：" + position, Toast.LENGTH_SHORT).show();
                 City city = cityList.get(position);
                 Intent intent = new Intent();
                 intent.putExtra("cityCode", city.getNumber());
+                setResult(RESULT_OK, intent);
+                // Toast.makeText(SelectCityActivity.this, "你单击了：" + city.getNumber(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
