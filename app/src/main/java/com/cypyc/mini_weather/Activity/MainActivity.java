@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.cypyc.mini_weather.R;
 import com.cypyc.mini_weather.beans.TodayWeather;
-import com.cypyc.mini_weather.tools.NetUtil;
-import com.cypyc.mini_weather.tools.XMLUtil;
+import com.cypyc.mini_weather.util.NetUtil;
+import com.cypyc.mini_weather.util.XMLUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

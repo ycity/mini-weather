@@ -1,4 +1,4 @@
-package com.cypyc.mini_weather.tools;
+package com.cypyc.mini_weather.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
