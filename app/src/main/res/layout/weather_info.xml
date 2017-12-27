@@ -247,7 +247,15 @@
                     android:textSize="20.0sp" />
             </RelativeLayout>
         </RelativeLayout>
-        <!-- 六日天气信息 -->
+
+        <!-- 六日天气信息 START -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        <!-- 六日天气信息 START -->
+
         <!-- 广告等信息 -->
     </LinearLayout>
 

@@ -5,10 +5,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yuncity on 2017/10/26.
@@ -33,14 +39,20 @@ public class MainActivity extends AppCompatActivity {
     private ImageView updateBtn, selectCityBtn;
     private TextView cityTv, timeTv, humidityTv, weekTv, pmDataTv, pmQualityTv, temperatureTv, climateTv, windTv, city_name_Tv;
     private ImageView weatherImg, pmImg;
+    private ViewPager viewPager;
+    private View weather1, weather2, weather3, weather4, weather5, weather6;
+
+    private List<View> weatherList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.weather_info); // 设置layout
+
+        setViewPager();
         setButtonListener(); // 设置各个按钮的监听
+
         checkNetStat(); // 检查网络状况
         initView(); // 对界面进行初始化
     }
@@ -85,6 +97,46 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     /* 创建一个Handler实例并重写其handleMessage函数 END */
+
+
+
+    private void setViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        LayoutInflater inflater = getLayoutInflater();
+        weather1 = inflater.inflate(R.layout.weather1, null);
+        weather2 = inflater.inflate(R.layout.weather2,null);
+        weather3 = inflater.inflate(R.layout.weather3, null);
+
+        weatherList = new ArrayList<View>();
+
+        weatherList.add(weather1);
+        weatherList.add(weather2);
+        weatherList.add(weather3);
+
+        viewPager.setAdapter(new PagerAdapter() {
+            @Override
+            public boolean isViewFromObject(View arg0, Object arg1) {
+                // TODO Auto-generated method stub
+                return arg0 == arg1;
+            }
+            @Override
+            public int getCount() {
+                // TODO Auto-generated method stub
+                return weatherList.size();
+            }
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                // TODO Auto-generated method stub
+                container.removeView(weatherList.get(position));
+            }
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                // TODO Auto-generated method stub
+                container.addView(weatherList.get(position));
+                return weatherList.get(position);
+            }
+        });
+    }
 
 
     /**
