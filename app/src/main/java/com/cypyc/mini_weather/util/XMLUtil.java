@@ -1,6 +1,8 @@
 package com.cypyc.mini_weather.util;
 
-import com.cypyc.mini_weather.beans.TodayWeather;
+import android.util.Log;
+
+import com.cypyc.mini_weather.beans.Weather;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -8,6 +10,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 
 /**
  * Created by yuncity on 2017/12/20.
@@ -19,14 +22,12 @@ public class XMLUtil {
      * methodName: parseXML
      * description: 对所读取的xml数据进行解析
      * parameters: @xmldata xml数据（字符串存储）
-     * return: TodayWeather
+     * return: Weather
      */
-    public static TodayWeather parseXML(String xmldata) {
+    public static ArrayList<Weather> parseXML(String xmldata) {
 
-        TodayWeather todayWeather = null;
-        int fengxiangCount, fengliCount, dateCount, highCount, lowCount, typeCount;
-        fengxiangCount = fengliCount = dateCount = highCount = lowCount = typeCount = 0;
-
+        ArrayList<Weather> weatherList = new ArrayList<Weather>();
+        Weather weather = null;
 
         try {
             XmlPullParserFactory fac = XmlPullParserFactory.newInstance();
@@ -39,53 +40,61 @@ public class XMLUtil {
                     case XmlPullParser.START_DOCUMENT: // 判断当前事件是否为文档开始事件
                         break;
                     case XmlPullParser.START_TAG: // 判断当前事件是否为标签元素开始事件
-                        if (xmlPullParser.getName().equals("resp")) {
-                            todayWeather = new TodayWeather();
+                        if (xmlPullParser.getName().equals("resp") || xmlPullParser.getName().equals("weather")) {
+                            Log.d("TAG", "1");
+                            if (weather != null) {
+                                weatherList.add(weather);
+                                Log.d("TAG", "2");
+                            }
+                            weather = new Weather();
                         }
                         /* 将标签里的数据对应地存入todayWeather中 START */
-                        if (todayWeather != null) {
+                        if (weather != null) {
                             if (xmlPullParser.getName().equals("city")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setCity(xmlPullParser.getText());
+                                weather.setCity(xmlPullParser.getText());
                             } else if (xmlPullParser.getName().equals("updatetime")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setUpdatetime(xmlPullParser.getText());
+                                weather.setUpdatetime(xmlPullParser.getText());
                             } else if (xmlPullParser.getName().equals("shidu")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setShidu(xmlPullParser.getText());
+                                weather.setShidu(xmlPullParser.getText());
                             } else if (xmlPullParser.getName().equals("wendu")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setWendu(xmlPullParser.getText());
+                                weather.setWendu(xmlPullParser.getText());
                             } else if (xmlPullParser.getName().equals("pm25")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setPm25(xmlPullParser.getText());
+                                weather.setPm25(xmlPullParser.getText());
                             } else if (xmlPullParser.getName().equals("quality")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setQuality(xmlPullParser.getText());
-                            } else if (xmlPullParser.getName().equals("fengxiang") && fengxiangCount == 0) {
+                                weather.setQuality(xmlPullParser.getText());
+                            } else if (xmlPullParser.getName().equals("fengxiang")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setFengxiang(xmlPullParser.getText());
-                                fengxiangCount++;
-                            } else if (xmlPullParser.getName().equals("fengli") && fengliCount == 0) {
+                                weather.setFengxiang(xmlPullParser.getText());
+                            } else if (xmlPullParser.getName().equals("fengli")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setFengli(xmlPullParser.getText());
-                                fengliCount++;
-                            } else if (xmlPullParser.getName().equals("date") && dateCount == 0) {
+                                weather.setFengli(xmlPullParser.getText());
+                            } else if (xmlPullParser.getName().equals("date")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setDate(xmlPullParser.getText());
-                                dateCount++;
-                            } else if (xmlPullParser.getName().equals("high") && highCount == 0) {
+                                weather.setDate(xmlPullParser.getText());
+                            } else if (xmlPullParser.getName().equals("high")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setHigh(xmlPullParser.getText().substring(2).trim());
-                                highCount++;
-                            } else if (xmlPullParser.getName().equals("low") && lowCount == 0) {
+                                weather.setHigh(xmlPullParser.getText().substring(2).trim());
+                            } else if (xmlPullParser.getName().equals("low")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setLow(xmlPullParser.getText().substring(2).trim());
-                                lowCount++;
-                            } else if (xmlPullParser.getName().equals("type") && typeCount == 0) {
+                                weather.setLow(xmlPullParser.getText().substring(2).trim());
+                            } else if (xmlPullParser.getName().equals("type")) {
                                 eventType = xmlPullParser.next();
-                                todayWeather.setType(xmlPullParser.getText());
-                                typeCount++;
+                                weather.setType(xmlPullParser.getText());
+                            } else if (xmlPullParser.getName().equals("high_1")) {
+                                eventType = xmlPullParser.next();
+                                weather.setHigh(xmlPullParser.getText().substring(2).trim());
+                            } else if (xmlPullParser.getName().equals("low_1")) {
+                                eventType = xmlPullParser.next();
+                                weather.setLow(xmlPullParser.getText().substring(2).trim());
+                            } else if (xmlPullParser.getName().equals("type_1")) {
+                                eventType = xmlPullParser.next();
+                                weather.setType(xmlPullParser.getText());
                             }
                             /* 将标签里的数据对应地存入todayWeather中 END */
                         }
@@ -100,7 +109,7 @@ public class XMLUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return todayWeather;
+        return weatherList;
     }
 
 }

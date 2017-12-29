@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cypyc.mini_weather.R;
-import com.cypyc.mini_weather.beans.TodayWeather;
+import com.cypyc.mini_weather.beans.Weather;
 import com.cypyc.mini_weather.util.NetUtil;
 import com.cypyc.mini_weather.util.XMLUtil;
 
@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by yuncity on 2017/10/26.
@@ -39,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private ImageView updateBtn, selectCityBtn;
     private TextView cityTv, timeTv, humidityTv, weekTv, pmDataTv, pmQualityTv, temperatureTv, climateTv, windTv, city_name_Tv;
     private ImageView weatherImg, pmImg;
-    private ViewPager viewPager;
-    private View weather1, weather2, weather3, weather4, weather5, weather6;
+    private TextView fweek1, ftemp1, fclimate1, fwind1;
+    private TextView fweek2, ftemp2, fclimate2, fwind2;
+    private TextView fweek3, ftemp3, fclimate3, fwind3;
+    private TextView fweek4, ftemp4, fclimate4, fwind4;
+    private TextView fweek5, ftemp5, fclimate5, fwind5;
+    private ImageView fcliateImg1, fcliateImg2, fcliateImg3, fcliateImg4, fcliateImg5;
 
-    private List<View> weatherList;
+    private ViewPager viewPager;
+    private View weather1, weather2;
+
+    private ArrayList<View> weatherViewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case UPDATE_TODAY_WEATHER:
-                    updateTodayWeather((TodayWeather) msg.obj);
+                    updateWeather((ArrayList<Weather>) msg.obj);
                     break;
                 default:
                     break;
@@ -99,19 +105,16 @@ public class MainActivity extends AppCompatActivity {
     /* 创建一个Handler实例并重写其handleMessage函数 END */
 
 
-
     private void setViewPager() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         LayoutInflater inflater = getLayoutInflater();
         weather1 = inflater.inflate(R.layout.weather1, null);
-        weather2 = inflater.inflate(R.layout.weather2,null);
-        weather3 = inflater.inflate(R.layout.weather3, null);
+        weather2 = inflater.inflate(R.layout.weather2, null);
 
-        weatherList = new ArrayList<View>();
+        weatherViewList = new ArrayList<View>();
 
-        weatherList.add(weather1);
-        weatherList.add(weather2);
-        weatherList.add(weather3);
+        weatherViewList.add(weather1);
+        weatherViewList.add(weather2);
 
         viewPager.setAdapter(new PagerAdapter() {
             @Override
@@ -119,21 +122,24 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 return arg0 == arg1;
             }
+
             @Override
             public int getCount() {
                 // TODO Auto-generated method stub
-                return weatherList.size();
+                return weatherViewList.size();
             }
+
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
                 // TODO Auto-generated method stub
-                container.removeView(weatherList.get(position));
+                container.removeView(weatherViewList.get(position));
             }
+
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 // TODO Auto-generated method stub
-                container.addView(weatherList.get(position));
-                return weatherList.get(position);
+                container.addView(weatherViewList.get(position));
+                return weatherViewList.get(position);
             }
         });
     }
@@ -203,12 +209,13 @@ public class MainActivity extends AppCompatActivity {
 
         final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey=" + cityCode;
         Log.d("url", address);
+
         /* 创建一个线程查询城市数据 START */
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpURLConnection con = null;
-                TodayWeather todayWeather = null;
+                ArrayList<Weather> weatherList;
                 try {
                     /* 设置连接参数 START */
                     URL url = new URL(address);
@@ -230,11 +237,11 @@ public class MainActivity extends AppCompatActivity {
                     /* 创建输入流，并逐行读取站点中的信息，最终保存在content字符串中 END */
 
                     /* 对读取的天气信息进行解析 START */
-                    todayWeather = XMLUtil.parseXML(content);
-                    if (todayWeather != null) {
+                    weatherList = XMLUtil.parseXML(content);
+                    if (weatherList != null) {
                         Message msg = new Message();
                         msg.what = UPDATE_TODAY_WEATHER;
-                        msg.obj = todayWeather;
+                        msg.obj = weatherList;
                         handler.sendMessage(msg);
                         handler.handleMessage(msg);
                     }
@@ -286,12 +293,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * methodName: updateTodayWeather
+     * methodName: updateWeather
      * description: 将todayWeather中的各项信息更新到界面中
      * parameters: @todayWeather 一个表示今日天气的类对象
-     * return: updateTodayWeather
+     * return: null
      */
-    void updateTodayWeather(TodayWeather todayWeather) {
+    void updateWeather(ArrayList<Weather> weatherList) {
+
+        Weather todayWeather = weatherList.get(0);
         city_name_Tv.setText(todayWeather.getCity() + "天气");
         cityTv.setText(todayWeather.getCity());
         timeTv.setText(todayWeather.getUpdatetime() + "发布");
@@ -308,9 +317,72 @@ public class MainActivity extends AppCompatActivity {
         weekTv.setText(todayWeather.getDate());
         temperatureTv.setText(todayWeather.getHigh() + "~" + todayWeather.getLow());
         climateTv.setText(todayWeather.getType());
-        updateWeatherImg(todayWeather.getType());
+        updateWeatherImg(weatherImg, todayWeather.getType());
         windTv.setText("风力:" + todayWeather.getFengli());
         Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();
+
+        Weather weather1, weather2, weather3, weather4, weather5;
+
+        weather1 = weatherList.get(1);
+        fweek1 = (TextView) findViewById(R.id.after1_week);
+        fcliateImg1 = (ImageView) findViewById(R.id.after1_weather_img);
+        ftemp1 = (TextView) findViewById(R.id.after1_temperature);
+        fclimate1 = (TextView) findViewById(R.id.after1_weather);
+        fwind1 = (TextView) findViewById(R.id.after1_wind);
+        fweek1.setText(weather1.getDate());
+        updateWeatherImg(fcliateImg1, weather1.getType());
+        ftemp1.setText(weather1.getLow() + "~" + weather1.getHigh());
+        fclimate1.setText(weather1.getType());
+        fwind1.setText("风力：" + weather1.getFengli());
+
+        weather2 = weatherList.get(2);
+        fweek2 = (TextView) findViewById(R.id.after2_week);
+        fcliateImg2 = (ImageView) findViewById(R.id.after2_weather_img);
+        ftemp2 = (TextView) findViewById(R.id.after2_temperature);
+        fclimate2 = (TextView) findViewById(R.id.after2_weather);
+        fwind2 = (TextView) findViewById(R.id.after2_wind);
+        fweek2.setText(weather2.getDate());
+        updateWeatherImg(fcliateImg2, weather2.getType());
+        ftemp2.setText(weather2.getLow() + "~" + weather2.getHigh());
+        fclimate2.setText(weather2.getType());
+        fwind2.setText("风力：" + weather2.getFengli());
+
+        weather3 = weatherList.get(3);
+        fweek3 = (TextView) findViewById(R.id.after3_week);
+        fcliateImg3 = (ImageView) findViewById(R.id.after3_weather_img);
+        ftemp3 = (TextView) findViewById(R.id.after3_temperature);
+        fclimate3 = (TextView) findViewById(R.id.after3_weather);
+        fwind3 = (TextView) findViewById(R.id.after3_wind);
+        fweek3.setText(weather3.getDate());
+        updateWeatherImg(fcliateImg3, weather3.getType());
+        ftemp3.setText(weather3.getLow() + "~" + weather3.getHigh());
+        fclimate3.setText(weather3.getType());
+        fwind3.setText("风力：" + weather3.getFengli());
+
+        weather4 = weatherList.get(4);
+        fweek4 = (TextView) findViewById(R.id.after4_week);
+        fcliateImg4 = (ImageView) findViewById(R.id.after4_weather_img);
+        ftemp4 = (TextView) findViewById(R.id.after4_temperature);
+        fclimate4 = (TextView) findViewById(R.id.after4_weather);
+        fwind4 = (TextView) findViewById(R.id.after4_wind);
+        fweek4.setText(weather4.getDate());
+        updateWeatherImg(fcliateImg4, weather4.getType());
+        ftemp4.setText(weather4.getLow() + "~" + weather4.getHigh());
+        fclimate4.setText(weather4.getType());
+        fwind4.setText("风力：" + weather4.getFengli());
+/*
+        weather5 = weatherList.get(5);
+        fweek5 = (TextView) findViewById(R.id.after5_week);
+        fcliateImg5 = (ImageView) findViewById(R.id.after5_weather_img);
+        ftemp5 = (TextView) findViewById(R.id.after5_temperature);
+        fclimate5 = (TextView) findViewById(R.id.after5_weather);
+        fwind5 = (TextView) findViewById(R.id.after5_wind);
+        fweek5.setText(weather5.getDate());
+        updateWeatherImg(fcliateImg5, weather5.getType());
+        ftemp5.setText(weather5.getLow() + "~" + weather5.getHigh());
+        fclimate5.setText(weather5.getType());
+        fwind5.setText("风力：" + weather5.getFengli());
+*/
     }
 
 
@@ -320,64 +392,64 @@ public class MainActivity extends AppCompatActivity {
      * parameters: @weather 天气
      * return: void
      */
-    private void updateWeatherImg(String weather) {
+    private void updateWeatherImg(ImageView view, String weather) {
         switch (weather) {
             case "暴雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_baoxue);
                 break;
             case "暴雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_baoyu);
                 break;
             case "大暴雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_dabaoyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_dabaoyu);
                 break;
             case "大雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_daxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_daxue);
                 break;
             case "大雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_dayu);
+                view.setImageResource(R.drawable.biz_plugin_weather_dayu);
                 break;
             case "多云":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_duoyun);
+                view.setImageResource(R.drawable.biz_plugin_weather_duoyun);
                 break;
             case "雷阵雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_leizhenyu);
                 break;
             case "雷阵雨冰雹":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyubingbao);
+                view.setImageResource(R.drawable.biz_plugin_weather_leizhenyubingbao);
                 break;
             case "沙尘暴":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_shachenbao);
+                view.setImageResource(R.drawable.biz_plugin_weather_shachenbao);
                 break;
             case "晴":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_qing);
+                view.setImageResource(R.drawable.biz_plugin_weather_qing);
                 break;
             case "雾":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_wu);
+                view.setImageResource(R.drawable.biz_plugin_weather_wu);
                 break;
             case "小雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_xiaoxue);
                 break;
             case "小雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_xiaoyu);
                 break;
             case "阴":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_yin);
+                view.setImageResource(R.drawable.biz_plugin_weather_yin);
                 break;
             case "雨夹雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_yujiaxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_yujiaxue);
                 break;
             case "阵雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_zhenxue);
                 break;
             case "阵雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_zhenyu);
                 break;
             case "中雪":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongxue);
+                view.setImageResource(R.drawable.biz_plugin_weather_zhongxue);
                 break;
             case "中雨":
-                weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongyu);
+                view.setImageResource(R.drawable.biz_plugin_weather_zhongyu);
                 break;
         }
     }

@@ -4,7 +4,7 @@ package com.cypyc.mini_weather.beans;
  * Created by yuncity on 2017/10/20.
  */
 
-public class TodayWeather {
+public class Weather {
     private String city;
     private String updatetime;
     private String wendu;

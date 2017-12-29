@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     >
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,29 +13,36 @@
             android:id="@+id/after1_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="星期五"/>
         <ImageView
             android:id="@+id/after1_weather_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/biz_plugin_weather_qing"/>
         <TextView
             android:id="@+id/after1_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="5℃~-4℃" />
         <TextView
             android:id="@+id/after1_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:text="多云转晴"
+            android:textSize="20.0sp" />
         <TextView
             android:id="@+id/after1_wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:text="微风"
+            android:textSize="20.0sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,29 +52,36 @@
             android:id="@+id/after2_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="星期六"/>
         <ImageView
             android:id="@+id/after2_weather_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/biz_plugin_weather_qing"/>
         <TextView
             android:id="@+id/after2_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="6℃~-3℃" />
         <TextView
             android:id="@+id/after2_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="晴" />
         <TextView
             android:id="@+id/after2_wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="微风" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -76,28 +91,35 @@
             android:id="@+id/after3_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="星期天"/>
         <ImageView
             android:id="@+id/after3_weather_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/biz_plugin_weather_qing"/>
         <TextView
             android:id="@+id/after3_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="8℃~-2℃" />
         <TextView
             android:id="@+id/after3_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="晴转多云" />
         <TextView
             android:id="@+id/after3_wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            />
+            android:layout_gravity="center"
+            android:textSize="20.0sp"
+            android:text="微风" />
     </LinearLayout>
 </LinearLayout>
