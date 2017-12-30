@@ -1,4 +1,4 @@
-package com.cypyc.mini_weather.Views;
+package com.cypyc.mini_weather.views;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

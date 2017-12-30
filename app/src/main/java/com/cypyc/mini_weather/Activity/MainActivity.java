@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkNetStat(); // 检查网络状况
         initView(); // 对界面进行初始化
+
     }
 
     @Override
@@ -289,6 +290,33 @@ public class MainActivity extends AppCompatActivity {
         temperatureTv.setText("N/A");
         climateTv.setText("N/A");
         windTv.setText("N/A");
+
+
+        /*
+        ftemp1.setText("N/A");
+        fclimate1.setText("N/A");
+        fwind1.setText("N/A");
+        
+        fweek2.setText("N/A");
+        ftemp2.setText("N/A");
+        fclimate2.setText("N/A");
+        fwind2.setText("N/A");
+        
+        fweek3.setText("N/A");
+        ftemp3.setText("N/A");
+        fclimate3.setText("N/A");
+        fwind3.setText("N/A");
+
+        fweek4.setText("N/A");
+        ftemp4.setText("N/A");
+        fclimate4.setText("N/A");
+        fwind4.setText("N/A");
+
+        fweek5.setText("N/A");
+        ftemp5.setText("N/A");
+        fclimate5.setText("N/A");
+        fwind5.setText("N/A");
+*/
     }
 
 
@@ -319,7 +347,8 @@ public class MainActivity extends AppCompatActivity {
         climateTv.setText(todayWeather.getType());
         updateWeatherImg(weatherImg, todayWeather.getType());
         windTv.setText("风力:" + todayWeather.getFengli());
-        Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();
+        pmDataTv.setText("48");
+        pmQualityTv.setText("空气良好");
 
         Weather weather1, weather2, weather3, weather4, weather5;
 
@@ -383,6 +412,7 @@ public class MainActivity extends AppCompatActivity {
         fclimate5.setText(weather5.getType());
         fwind5.setText("风力：" + weather5.getFengli());
 */
+        Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.cypyc.mini_weather.R;
-import com.cypyc.mini_weather.Views.ClearEditText;
+import com.cypyc.mini_weather.views.ClearEditText;
 import com.cypyc.mini_weather.adapter.CityAdapter;
 import com.cypyc.mini_weather.app.MyApplication;
 import com.cypyc.mini_weather.beans.City;
